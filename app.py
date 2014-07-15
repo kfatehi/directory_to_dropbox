@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+import os
+import sys
+args = sys.argv[1:]
+relpath = args[0] if args else '.'
+path = os.path.abspath(relpath)
+print "Watching "+path
+
 import dropbox
 app_key = 'iejck3u2kmmm65e'
 app_secret = 'damh69bugl5zgii'
@@ -15,16 +22,15 @@ access_token, user_id = flow.finish(code)
 client = dropbox.client.DropboxClient(access_token)
 print 'linked account: ', client.account_info()
 
-import os
-import time  
-from watchdog.observers import Observer  
-from watchdog.events import PatternMatchingEventHandler  
+import time
+from watchdog.observers import Observer
+from watchdog.events import PatternMatchingEventHandler
 
 class MyHandler(PatternMatchingEventHandler):
   patterns = ["*"]
 
   """
-  event.event_type 
+  event.event_type
       'modified' | 'created' | 'moved' | 'deleted'
   event.is_directory
       True | False
@@ -41,10 +47,8 @@ class MyHandler(PatternMatchingEventHandler):
       print 'uploaded: ', response
 
 if __name__ == '__main__':
-  import sys
-  args = sys.argv[1:]
   observer = Observer()
-  observer.schedule(MyHandler(), path=args[0] if args else '.', recursive=True)
+  observer.schedule(MyHandler(), path=path, recursive=True)
   observer.start()
 
   try:
@@ -54,4 +58,3 @@ if __name__ == '__main__':
     observer.stop()
 
   observer.join()
-
