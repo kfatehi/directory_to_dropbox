@@ -8,8 +8,8 @@ path = os.path.abspath(relpath)
 print "Watching "+path
 
 import dropbox
-app_key = 'iejck3u2kmmm65e'
-app_secret = 'damh69bugl5zgii'
+app_key = '1cqni8u3qt9b2vr'
+app_secret = '425yk4b95nldvk5'
 flow = dropbox.client.DropboxOAuth2FlowNoRedirect(app_key, app_secret)
 
 authorize_url = flow.start()
